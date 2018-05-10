@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.configurarSimulacion.models import *
+from apps.configurarSimulacion.models import Siembra,Configuracion,FaseCultivo,Simulacion,Usuario
 
 # Register your models here.
 admin.site.register(Siembra)
