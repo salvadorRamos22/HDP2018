@@ -26,8 +26,8 @@ def simulacionCrear(request):
 		simula.nombre = request.POST['simulacion']
 		simula.lineaSiembra = request.POST['linea']
 		simula.estado = 1
-		simula.siembra = request.POST['siembra']
-		simula.usuario = 1
+		simula.siembra = siembras
+		#simula.usuario = 1
 		simula.faseCultivo = request.POST['fase']
 		simula.configuracion=confi.objects.get('id')
 		simula.save()
