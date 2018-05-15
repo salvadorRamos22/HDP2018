@@ -16,12 +16,23 @@ year=('1930','1931','1932','1933','1934','1935','1936','1937','1938','1939',
 	'1990','1991','1992','1993','1994','1995','1996','1997','1998','1999',
 	'2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010',
 	)
+genero=(('masculino','masculino')
+	,('femenino','femenino'))
 
 class RegistrarForm(forms.ModelForm):
-
-	password = forms.CharField(widget=forms.PasswordInput,max_length=8)
-	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year))
-	sexo=forms.CharField(widget=forms.Select())
+	nombre=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
+	apellido=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
+	nombre_usuario=forms.CharField(label='nombre de usuario',widget=forms.TextInput(attrs={'placeholder':'su nombre de usuario aqui','class':'form-control form-control-sm'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control form-control-sm'}),max_length=8)
+	fechaNacimiento=forms.DateField(label='Fecha de nacimiento',widget = forms.SelectDateWidget(years=year,attrs={'class':'form-control'}))
+	sexo=forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control'}),choices=genero)
 	class Meta:
 		model=Usuario
 		fields= '__all__'
+
+class LoginForm(forms.ModelForm):
+	nombre_usuario=forms.CharField(label='nombre de usuario',widget=forms.TextInput(attrs={'placeholder':'su nombre de usuario aqui','class':'form-control'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}),max_length=8)
+	class Meta:
+		model=Usuario
+		fields= ('nombre_usuario','password')
