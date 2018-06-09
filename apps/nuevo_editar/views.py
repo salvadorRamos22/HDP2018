@@ -82,55 +82,6 @@ def simularVer(request,idSimulacion):
 	contexto={'simula':simula}
 	return render(request,'Simulacion/simular.html',contexto)
 
-
-"""def grafico(request,idSimulacion):
-	e = 2.718281828
-	simula = Simulacion.objects.get(id=idSimulacion)
-	altura = simula.configuracion.altitud
-	tMaxima = simula.configuracion.temperaturaMax
-	tMinima = simula.configuracion.temperaturaMin
-	humedad = simula.configuracion.humedad
-	if tMinima < 8:
-		rT = 0
-	elif tMaxima <= 12:
-		rT = 0.55
-	elif tMaxima <= 29:
-		rT = 0.75
-	elif tMaxima <= 35:
-		rT = 1
-	elif tMaxima <= 45:
-		rT=1
-	elif tMaxima <= 50:
-		rt=0
-
-	tiempo = tiempoDia(simula)
-	hFase = hidricoFase(simula)
-	contador = len(tiempo)
-	validar2 = validar(simula)
-	tiempo2=[]
-	for a in tiempo:
-		tiempo2.append(float(a))
-
-	rm = Decimal((altura))*Decimal((0.021))
-	N=[]
-	for t in tiempo2:
-		if t == 0:
-			N.append(0)
-		else:
-			getcontext().prec = 2
-			N.append(float(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
-
-	numero = len(N)
-	
-	nodos2 = simplejson.dumps(N)
-	jsonParametros(nodos2)
-
-	return render_to_response('Simulacion/grafico.html',{'nodos':nodos2,'simula':simula,'tiempo':tiempo2,'hidrico':hFase,'humedad':humedad,'numero':numero,'validar':validar2})"""
-
-"""def jsonParametros(nodo,hidrico,humedad,validar):
-	data = {"nodos":nodo,"hidrico":hidrico,"humedad":humedad,"validar":validar}
-	return JsonResponse(data)"""
-
 def jsonParametros(request):
 	e = 2.718281828
 	idSimulacion = request.GET.get('grafico')
@@ -142,7 +93,6 @@ def jsonParametros(request):
 	tMinima = float(simula.configuracion.temperaturaMin)
 	hidrico = hidricoFase(simula)
 	faseC = fase(simula) 
-
 	if tMinima < 8:
 		rT = 0
 	elif tMaxima <= 12:
@@ -168,8 +118,6 @@ def jsonParametros(request):
 		else:
 			getcontext().prec = 4
 			N.append(float(Decimal(e)**(Decimal(rm)*Decimal(float(t)))*Decimal(rT)))
-	
-	#nodos = [1,2,3,4,5,6,7]
 	nodos = N
 	contexto = {'altitud':altitud,'humedad':humedad,'nodos':nodos,'valida':valida,'hidrico':hidrico,'fase':faseC}
 	return HttpResponse(json.dumps(contexto),content_type='application/json') 
